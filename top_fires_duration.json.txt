@@ -1,1 +1,0 @@
-{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"acresburned": 22992.0, "adminunit": "Sierra National Forest", "archiveyear": 2013, "county": "Fresno", "extinguished": 
