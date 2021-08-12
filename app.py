@@ -5,7 +5,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 # Custom function to convert DF into geoJSON format
 def df_to_geojson(df, properties, lat='latitude', lon='longitude'):
@@ -159,7 +159,7 @@ def byFatality():
     with open("fires4plotting.json", "w") as output:
         json.dump(top_fires_deadliest_geoJSON, output)
 
-    return jsonify(top_fires_deadliest_geoJSON)
+    return jsonify(top_fires_deadliest_geoJSON)#render_template("index.html")
 
 
 @app.route("/all_fires")

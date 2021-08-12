@@ -1,4 +1,5 @@
 d3.json("../../deadliest_fires.json").then(function(data){
+// d3.json("../../fires4plotting.json").then(function(data){ 
 var labels = [];
 var values = [];
 
