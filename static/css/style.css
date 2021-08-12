@@ -11,3 +11,28 @@ body {
   html {
     height: 100%;
   }
+
+  a:link {
+    color: tab:blue;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: tab:red;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: tab:blue;
+    text-decoration: none;
+  }
+
+  #myChart {
+    width: 200px;
+    height: 25%;
+  }
+
+  .chartjs {
+    width: 50%;
+    text-align: center;
+  }

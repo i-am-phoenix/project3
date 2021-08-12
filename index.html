@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Basic Map</title>
+  <title>Chart js</title>
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -20,13 +20,19 @@
 
   <!-- use d3-->
   <script src="https://d3js.org/d3.v5.min.js"></script>
+  
+  <!-- chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js" integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
 
 <body>
-  <!-- The div where we'll insert our map -->
-  <div id="map"></div>
-
+  <div class="row">
+    <div class="chartjs">
+      <p>Below is a bar chart created using <a href="https://www.chartjs.org/">Chart.js</a> library</p>
+      <canvas id="myChart"></canvas>
+    </div>
+  </div>
   <!-- JavaScript file -->
   <script type="text/javascript" src="static/js/logic.js"></script>
 </body>
