@@ -43,6 +43,13 @@ def welcome():
 
 @app.route("/longest_fires")
 def byDuration():
+    # setup connection
+    rds_connection_string = "postgres:postgres@localhost:5432/ca_fire"
+    engine = create_engine(f'postgresql://{rds_connection_string}')
+
+    # pull table names
+    table_name = engine.table_names()[0] # fire_data
+    
     # FLask path 1: Pull data for top 10 longest burning fires in each year
     query_top_fires_duration = """
     SELECT firename, firelocation, archiveyear, started, extinguished, latitude, longitude, 
@@ -102,15 +109,22 @@ def byDuration():
         df_top_fires_duration.drop(['latitude','longitude'], axis=1).columns)
     # top_fires_duration_geoJSON
 
-    # Write geoJSON formatted text to a text file
-    with open("top_fires_duration.json", "w") as output:
-        json.dump(top_fires_duration_geoJSON, output)
+    # # Write geoJSON formatted text to a text file
+    # with open("top_fires_duration.json", "w") as output:
+    #     json.dump(top_fires_duration_geoJSON, output)
 
     return jsonify(top_fires_duration_geoJSON)
 
 
 @app.route("/deadliest_fires")
 def bySize():
+    # setup connection
+    rds_connection_string = "postgres:postgres@localhost:5432/ca_fire"
+    engine = create_engine(f'postgresql://{rds_connection_string}')
+
+    # pull table names
+    table_name = engine.table_names()[0] # fire_data
+
     # FLask path 3: Pull data for top 10 deadliest fires overall
     query_deadliest = """
     SELECT firename, firelocation, archiveyear, started, extinguished, latitude, longitude, 
@@ -159,11 +173,72 @@ def bySize():
     daedliest_fires_geoJSON = df_to_geojson(df_deadliest , df_deadliest.drop(['latitude','longitude'], axis=1).columns)
     # daedliest_fires_geoJSON
 
-    # Write geoJSON formatted text to a text file
-    with open("deadliest_fires.json", "w") as output:
-        json.dump(daedliest_fires_geoJSON, output)
+    # # Write geoJSON formatted text to a text file
+    # with open("deadliest_fires.json", "w") as output:
+    #     json.dump(daedliest_fires_geoJSON, output)
 
-    return (daedliest_fires_geoJSON)
+    return jsonify(daedliest_fires_geoJSON)
+
+
+@app.route("/all_fires")
+def all():
+    # setup connection
+    rds_connection_string = "postgres:postgres@localhost:5432/ca_fire"
+    engine = create_engine(f'postgresql://{rds_connection_string}')
+
+    # pull table names
+    table_name = engine.table_names()[0] # fire_data
+
+    # FLask path 4: Pull data for all fires
+    query_all = """
+    SELECT * FROM fire_data;
+    """
+    # Execute sql query 
+    data_all_fires = engine.execute(query_all)  
+
+    # Pull data table column names
+    table_headers = engine.execute(query_all)._metadata.keys
+
+    # convert to DF
+    df_all_fires = pd.DataFrame(data_all_fires, columns=table_headers)
+    # df_deadliest
+
+    def df_to_geojson(df, properties, lat='latitude', lon='longitude'):
+        # create a new python dict to contain our geojson data, using geojson format
+        geojson = {'type':'FeatureCollection', 'features':[]}
+
+        # loop through each row in the dataframe and convert each row to geojson format
+        for _, row in df.iterrows():
+            # create a feature template to fill in
+            feature = {'type':'Feature',
+                    'properties':{},
+                    'geometry':{'type':'Point',
+                                'coordinates':[]}}
+
+            # fill in the coordinates
+            feature['geometry']['coordinates'] = [row[lon],row[lat]]
+
+            # for each column, get the value and add it as a new feature property
+            for prop in properties:
+                if type(row[prop]) != str:
+                    feature['properties'][prop] = str(row[prop])
+                else :
+                    feature['properties'][prop] = row[prop]
+            
+        # add this feature (aka, converted dataframe row) to the list of features inside our dict
+        geojson['features'].append(feature)
+    
+        return geojson
+
+    # Convert refined data frame to geoJSON format
+    all_fires_geoJSON = df_to_geojson(df_all_fires , df_all_fires.drop(['latitude','longitude'], axis=1).columns)
+    # daedliest_fires_geoJSON
+
+    # # Write geoJSON formatted text to a text file
+    # with open("all_fires.json", "w") as output:
+    #     json.dump(all_fires_geoJSON, output)
+
+    return jsonify(all_fires_geoJSON)
 
 
 if __name__ == '__main__':
