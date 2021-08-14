@@ -28,11 +28,31 @@ body {
   }
 
   #myChart {
-    width: 200px;
-    height: 25%;
+    /* width: 200px; */
+    height: 30px;
   }
 
-  .chartjs {
-    width: 50%;
+  .header {
     text-align: center;
+    vertical-align: middle;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    background-color: darkslategrey;
+    color: white;
+    /* width: fit-content; */
   }
+
+  p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    padding-left: 5px;
+  }
+
+h1, h2, h3, h4, h5 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.col-md {
+  padding: 10px;
+  margin: 5px
+}

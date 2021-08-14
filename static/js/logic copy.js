@@ -43,6 +43,12 @@ d3.json("../../top_fires_duration.json").then(function(data){
 
     function createBarChart() {
 
+        // var dropdownMenu = d3.select("#selYear");
+  
+        // // Assign the value of the dropdown menu option to a variable
+        // var selectedYear = dropdownMenu.node().value//property("value");
+        // console.log(`Year selected is >>>> ${selectedYear}`)
+        
         var labels = [];
         var values = [];
         var selectedYear = 2013
@@ -53,13 +59,20 @@ d3.json("../../top_fires_duration.json").then(function(data){
             var label  = data.features[i].properties.firename;    
             var value  = data.features[i].properties.duration;
             var year   = data.features[i].properties.archiveyear;
-
+            // var county = data.features[i].properties.county;
+            // console.log(`${i}   ${year} >>> ${label} >>> ${parseInt(value)}`)
+        
             if (parseInt(year) === parseInt(selectedYear)) {
                 labels.push(`${label}`) // labels.push(`${year} | ${label}`)
                 values.push(parseFloat(value).toFixed(2))
+                // console.log(`labels: ${labels}`)
+                // console.log(`values: ${values}`)
             };
         
         };
+
+        // console.log(`labels: ${labels}`)
+        // console.log(`values: ${values}`)
 
         var ctx = document.getElementById('myChart');
         myChart = new Chart(ctx, {
@@ -79,9 +92,7 @@ d3.json("../../top_fires_duration.json").then(function(data){
                     y: {
                         beginAtZero: true
                     }
-                },
-                responsive: true,
-                maintainAspectRatio: false
+                }
             }
         });
     };
@@ -104,13 +115,16 @@ d3.json("../../top_fires_duration.json").then(function(data){
             var label  = data.features[i].properties.firename;    
             var value  = data.features[i].properties.duration;
             var year   = data.features[i].properties.archiveyear;
-   
+            // var county = data.features[i].properties.county;
+            // console.log(`${i}   ${year} >>> ${label} >>> ${parseInt(value)}`)
+        
             if (parseInt(year) === parseInt(selectedYear)) {
                 labels.push(`${label}`) // labels.push(`${year} | ${label}`)
                 values.push(parseFloat(value).toFixed(2))
             };
         
         };
+
 
         myChart.data.labels = labels;
         myChart.data.datasets[0].data = values;
