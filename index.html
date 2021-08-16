@@ -20,35 +20,51 @@
 
   <!-- use d3-->
   <script src="https://d3js.org/d3.v5.min.js"></script>
-  
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
   <!-- chart.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js" integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
 
 <body>
-<div class="container-fluid">
-  <div class="row">
-    <div class="header">
+<div class="container" style="width: 100%; text-align: center;">
+  <div class="row" style="text-align: center;">
+    <div class="header" style="width: 100%;">
       <h1>CALIFORNIA ON FIRE</h1>
-      <p>Use the below interactive dashboard to vie key fire statistics<br>for the state of California between 2013 and 2019 </p>
+      <p>Use the below interactive dashboard to view key fire statistics<br>for the state of California between 2013 and 2019 </p>
     </div>
   </div>
 </div>
-<div class="container-fluid">
+<div class="container">
+  <div class="row" style="background-color: darkslategrey;">
+    <div class="col-lg-12" style="text-align: right; color:white">
+        <p>Select year to review: <select id="selYear"></select></p>
+    </div>
+  </div>
   <div class="row">
-    <div class="col-md-2" style="max-height: 400px;"> -->
-      <h4 style="text-align: center;">Top 10 fires<br>by duration</h4>
-      <canvas id="myChart"></canvas>
+    <div class="col-lg-4" style="width: 20%;">
+      <div class="row">
+        <div class="col-sm-12">
+          <h4 style="text-align: center;">Top 10 fires by duration</h4>
+          <canvas id="myChart" style="height:100px; width:20%"></canvas>
+        </div>
+        <div class="col-sm-12" style="text-align: center; vertical-align: middle; height: 200px; background-color: lightpink;">
+          <h4 style="text-align: center; height:100px;">Another bar chart<br>placeholder under</h4>
+        </div>
+      </div>
     </div>
-    <div class="col-md-8 offset-md-2">
-      <p>Select year to review: <select id="selYear"></select></p>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5492583.064425747!2d-121.04251005368528!3d36.92945194379992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb9fe5f285e3d%3A0x8b5109a227086f55!2sCalifornia!5e0!3m2!1sen!2sus!4v1628974598669!5m2!1sen!2sus" width="200" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <div class="col-lg-8">
+      <div id="map"></div>
+      
     </div>
-  </div>
-</div>
+  </div> 
+
   <!-- JavaScript file -->
-  <script type="text/javascript" src="static/js/logic.js"></script>
+  <!-- <script type="text/javascript" src="static/js/logic.js"></script> -->
+  <script type="text/javascript" src="static/js/map_logic.js"></script>
 </body>
 
 </html>

@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 import json
 from flask import Flask, jsonify, render_template
+from flask_cors import CORS
 
 # Custom function to convert DF into geoJSON format
 def df_to_geojson(df, properties, lat='latitude', lon='longitude'):
@@ -45,11 +46,11 @@ table_name = engine.table_names()[0] # fire_data
 
 # Flask Setup
 app = Flask(__name__)
-
+CORS(app)
 # Flask Routes
 
 @app.route("/")
-def welcome():
+def index():
     """List all available api routes."""
     return (
         f'<strong style="font-family: "Arial";>Available Routes:</strong><br>'
@@ -58,6 +59,7 @@ def welcome():
         f"/deadliest_fires<br>"
         f"/all_fires<br>"
     )
+    # render_template("index.html")
 
 @app.route("/longest_fires")
 def byDuration():
@@ -80,8 +82,6 @@ def byDuration():
     # Execute sql query 
     data_top_fires_duration = engine.execute(query_top_fires_duration)  
 
-    df_test = pd.read_sql(query_top_fires_duration, con=engine)
-
     # Pull data table column names
     table_headers = engine.execute(query_top_fires_duration)._metadata.keys
 
@@ -90,8 +90,8 @@ def byDuration():
     # df_top_fires_duration.head()
 
     # Convert refined data frame to geoJSON format
-    top_fires_duration_geoJSON = df_to_geojson(df_test, 
-        df_test.drop(['latitude','longitude'], axis=1).columns)
+    top_fires_duration_geoJSON = df_to_geojson(df_top_fires_duration, 
+        df_top_fires_duration.drop(['latitude','longitude'], axis=1).columns)
     # top_fires_duration_geoJSON
 
     # Write geoJSON to json file for plotting

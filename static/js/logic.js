@@ -1,4 +1,12 @@
-d3.json("../../top_fires_duration.json").then(function(data){
+duration_geoJSON = "../../top_fires_duration.json" 
+acres_geoJSON = "../../top_fires_acres.json" 
+deadliest_geoJSON = "../../deadliest_fires.json" 
+all_geoJSON = "../../all_fires.json" 
+//input_geoJSON = "http://127.0.0.1:5000/longest_fires"
+
+
+d3.json(duration_geoJSON).then(function(data){
+    console.log("all data", data)
     // d3.json("../../fires4plotting.json").then(function(data){ 
     var uniqueYears = [];
  
@@ -81,7 +89,7 @@ d3.json("../../top_fires_duration.json").then(function(data){
                     }
                 },
                 responsive: true,
-                maintainAspectRatio: false
+                // maintainAspectRatio: true
             }
         });
     };
